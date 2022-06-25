@@ -35,7 +35,9 @@ let persons = [
 ]
 
 app.get('/', (request, response) => {
-   response.send('<h1>Running!</h1>')
+   response.send({
+      "status" : "working",
+   })
 })
 
 app.get('/api/persons', (request, response) => {
