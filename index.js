@@ -3,10 +3,6 @@ const app = express()
 
 app.use(express.json())
 
-morgan.token('body', (request, response) => {
-   return JSON.stringify(request.body)
-})
-
 let persons = [
    { 
      "id": 1,
