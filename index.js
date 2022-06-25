@@ -27,12 +27,6 @@ let persons = [
    }
 ]
 
-app.get('/', (request, response) => {
-   response.send({
-      "status" : "working",
-   })
-})
-
 app.get('/api/persons', (request, response) => {
    response.json(persons)
 })
