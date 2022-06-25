@@ -1,4 +1,6 @@
 /node_modules
 
+.env
+
 delete_note.rest
 post_contact.rest

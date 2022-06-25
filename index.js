@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const Person = require('./models/person')
 
 app.use(express.static('build'))
 app.use(express.json())
