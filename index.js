@@ -1,7 +1,13 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 app.use(express.json())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+
+morgan.token('body', (request, response) => {
+   return JSON.stringify(request.body)
+})
 
 let persons = [
    { 
@@ -81,9 +87,7 @@ app.post('/api/persons', (request, response) => {
 
    const alreadyExists = persons.filter(person => person.name === body.name)
 
-   console.log(alreadyExists)
-
-   if(alreadyExists) {
+   if(alreadyExists.length > 0) {
       return response.status(406).json({
          error: 'persons already exists'
       })
@@ -96,7 +100,6 @@ app.post('/api/persons', (request, response) => {
    }
 
    persons = persons.concat(person)
-   response.json(person)
 })
 
 const PORT = 3001
