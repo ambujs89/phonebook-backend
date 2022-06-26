@@ -3,7 +3,7 @@ const express = require("express")
 const app = express()
 const Person = require("./models/person")
 
-app.use(express.static("build"))
+app.use(express.static("./build"))
 app.use(express.json())
 
 app.get("/api/persons", (request, response) => {
@@ -27,6 +27,11 @@ app.get('/info', (request, response) => {
       })
    })
 })
+const unknownEndpoint = (request, response) => {
+   response.status(404).send({ error: 'unknown endpoint' })
+ }
+
+app.use(unknownEndpoint)
 
 app.delete('/api/persons/:id', (request, response) => {
    const id = String(request.params.id)
@@ -61,6 +66,8 @@ app.put('/api/persons/:id', (request, response, next) => {
      })
      .catch(error => next(error))
  })
+
+
 
 app.post("/api/persons", (request, response) => {
    const body = request.body
