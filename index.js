@@ -34,7 +34,6 @@ app.delete("/api/persons/:id", (request, response) => {
 
    Person.findByIdAndDelete(id)
       .then((person) => {
-         console.log(person)
          if (person) {
             response.json(person)
          } else {
@@ -66,7 +65,7 @@ app.put("/api/persons/:id", (request, response, next) => {
 
 
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
    const body = request.body
 
    if (!body.name || !body.number) {
@@ -76,7 +75,6 @@ app.post("/api/persons", (request, response) => {
    }
 
    Person.find({ name: String(body.name) }).then((result) => {
-      console.log(result)
       if (result.length > 0) {
          return response.status(400).json({
             error: "person already exists",
@@ -89,7 +87,7 @@ app.post("/api/persons", (request, response) => {
 
          person.save().then((savedPerson) => {
             response.json(savedPerson)
-         })
+         }).catch(error => next(error))
       }
    })
 })
@@ -115,5 +113,5 @@ app.use(unknownEndpoint)
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
-   console.log(`Server running on port ${PORT}`)
+   console.log(`Server is running on port ${PORT}`)
 })
